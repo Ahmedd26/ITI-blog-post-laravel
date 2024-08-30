@@ -29,17 +29,65 @@
             <div class="hidden w-full md:block md:w-auto" id="navbar-default">
                 <ul
                     class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-zinc-100 rounded-lg bg-zinc-50 md:flex-row md:items-center md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-zinc-800 md:dark:bg-zinc-900 dark:border-zinc-700">
-                    <li>
-                        <a href="{{ route('posts.index') }}"
-                            class="block py-2  px-3 text-zinc-900 rounded hover:bg-zinc-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-zinc-700 dark:hover:text-white md:dark:hover:bg-transparent">
-                            All posts</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('creators.index') }}"
-                            class="block py-2  px-3 text-zinc-900 rounded hover:bg-zinc-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-zinc-700 dark:hover:text-white md:dark:hover:bg-transparent">
-                            All creators</a>
-                    </li>
-                    <li><button class="btn btn-primary" onclick="toggleDarkMode()">Theme</button></li>
+
+                    @guest
+                        @if(Route::has('login'))
+                            <li>
+                                <a href="{{ route('login') }}"
+                                    class="block py-2  px-3 text-zinc-900 rounded hover:bg-zinc-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-zinc-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                                    {{__('Login')}}</a>
+                            </li>
+                        @endif
+                        @if(Route::has('register'))
+                            <li>
+                                <a href="{{ route('register') }}"
+                                    class="block py-2  px-3 text-zinc-900 rounded hover:bg-zinc-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-zinc-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                                    {{__('Register')}}</a>
+                            </li>
+                        @endif
+                    @else
+                        <li>
+                            <!-- src="http://127.0.0.1:8000/images/posts/images/nUwjyoeeXYmEi6i76wlMwQXUj1IhbmVxgsT1BNAd.png" -->
+                            <img id="avatarButton" type="button" data-dropdown-toggle="userDropdown"
+                                data-dropdown-placement="bottom" class="size-16 rounded-full cursor-pointer"
+                                src="{{asset('images/users/' . (Auth::user()->image ? Auth::user()->image : 'images/default.png'))}}"
+                                alt="User dropdown">
+                            <div id="userDropdown"
+                                class="z-10 hidden bg-white divide-y divide-zinc-100 rounded-lg shadow w-44 dark:bg-zinc-700 dark:divide-zinc-600">
+                                <div class="px-4 py-3 text-sm text-zinc-900 dark:text-white">
+                                    <div>{{Auth::user()->name}}</div>
+                                    <div class="font-medium truncate">{{Auth::user()->email}}</div>
+                                </div>
+                                <ul class="py-2 text-sm text-zinc-700 dark:text-zinc-200" aria-labelledby="avatarButton">
+                                    <li>
+                                        <a href="{{ route('posts.index') }}"
+                                            class="block px-4 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-600 dark:hover:text-white">All
+                                            posts</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('creators.index') }}"
+                                            class="block px-4 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-600 dark:hover:text-white">All
+                                            creators</a>
+                                    </li>
+
+                                    <li><button
+                                            class="block w-full text-start px-4 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-600 dark:hover:text-white"
+                                            onclick="toggleDarkMode()">Change theme</button></li>
+
+                                </ul>
+                                <div class="py-1">
+                                    <form action="{{ route('logout') }}" method="POST"
+                                        class="block cursor-pointer px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-600 dark:text-zinc-200 dark:hover:text-white">
+                                        @csrf
+                                        <button type="submit">
+                                            Sign out
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+
+                    @endguest
 
                 </ul>
             </div>

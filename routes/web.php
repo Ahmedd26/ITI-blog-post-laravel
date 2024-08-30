@@ -19,3 +19,6 @@ Route::resource('posts', PostController::class);
 
 use App\Http\Controllers\CreatorController;
 Route::resource('creators', CreatorController::class);
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

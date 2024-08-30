@@ -11,6 +11,14 @@ use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
+
+
+    function __construct()
+    {
+        $this->middleware("auth")->only(["create"]);
+
+    }
+
     /**
      * Display a listing of the resource.
      */

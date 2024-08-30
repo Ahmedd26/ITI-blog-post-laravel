@@ -27,7 +27,11 @@ All Posts
                     Created at
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Actions
+                @auth()    
+                Actions
+                @else
+                View
+                @endauth
                 </th>
             </tr>
         </thead>
@@ -57,11 +61,13 @@ All Posts
                     <td class="px-6 py-4 ">
                         <div class="flex items-center  gap-2">
                             <a href="{{route("posts.show", $post->id)}}" class="btn btn-tertiary">View</a>
+                            @auth()
                             <a href="{{route("posts.edit", $post->id)}}" class="btn btn-primary">Edit</a>
                             <button data-modal-target="{{'popup-modal' . $post->id}}"
                                 data-modal-toggle="{{'popup-modal' . $post->id}}" class="btn btn-danger" type="button">
                                 Delete
                             </button>
+                        @endauth
                         </div>
                         <!-- Confirm Delete Modal -->
                         <div id="{{'popup-modal' . $post->id}}" tabindex="-1"
