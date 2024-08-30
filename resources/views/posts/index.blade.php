@@ -98,7 +98,7 @@
                         @endif
                     </td>
                     <td class="px-6 py-4">{{ $post->title }}</td>
-                    <td class="px-6 py-4">{{ $post->user->name }}</td>
+                    <td class="px-6 py-4">{{ $post->user->name ?? "Unknown"}}</td>
                     <td class="px-6 py-4">{{ $post->created_at->format('Y/m/d') }}</td>
                     <td class="px-6 py-4 ">
                         <div class="flex items-center gap-2">

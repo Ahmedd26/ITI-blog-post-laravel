@@ -28,7 +28,7 @@ class StorePostRequest extends FormRequest
                 "min:3"
             ],
             "description" => "required|string|min:10",
-            "image" => "image|mimes:jpeg,jpg,png|max:2048",
+            "image" => "required|image|mimes:jpeg,jpg,png,webp|max:2048",
         ];
     }
     public function messages(): array
