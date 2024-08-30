@@ -9,8 +9,8 @@ class Creator extends Model
 {
     use HasFactory;
     protected $fillable = ['name'];
-    function posts()
-    {
-        return $this->hasMany(Post::class);
-    }
+    // function posts()
+    // {
+    //     return $this->hasMany(Post::class);
+    // }
 }

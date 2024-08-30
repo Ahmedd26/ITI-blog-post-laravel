@@ -62,7 +62,7 @@ Login
                         in</button>
                 </div>
                 <p class="text-sm font-light text-zinc-500 dark:text-zinc-400">
-                    Don’t have an account yet? <a href="#"
+                    Don’t have an account yet? <a href={{route('register')}}
                         class="font-medium text-blue-600 hover:underline dark:text-blue-500">Sign up</a>
                 </p>
             </form>

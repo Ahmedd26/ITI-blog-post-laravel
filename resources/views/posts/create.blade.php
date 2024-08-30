@@ -33,21 +33,6 @@ Create post
             <p class="mt-2 text-sm text-zinc-500 dark:text-zinc-300" id="image_upload_help">SVG, PNG, JPG or GIF (MAX.
                 800x400px).</p>
         </div>
-        <!--** Creator **-->
-        <div class="">
-            <label for="creator" class="block mb-2 text-sm font-medium text-zinc-900 dark:text-white">Post
-                creator</label>
-            <select id="creator" name="creator_id"
-                class="bg-zinc-50 border border-zinc-300 text-zinc-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option disabled selected value=""> Please choose creator</option>
-                @foreach($creators as $creator)
-                    <option value="{{$creator->id}}" {{old('creator_id') === $creator->id ? "selected" : ""}}>
-                        {{$creator->name}}
-                    </option>
-                @endforeach
-            </select>
-
-        </div>
         <!--** Submit **-->
         <div class="">
             <button type="submit" class="btn btn-primary">Create</button>

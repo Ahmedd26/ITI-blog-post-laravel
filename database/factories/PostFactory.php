@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Creator;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,7 +22,8 @@ class PostFactory extends Factory
             "title" => $this->faker->sentence,
             "description" => $this->faker->paragraph(1),
             "image" => $this->faker->imageUrl(),
-            "creator_id" => Creator::inRandomOrder()->value('id')
+            "creator_id" => User::inRandomOrder()->value('id')
+            // "creator_id" => Creator::inRandomOrder()->value('id')
         ];
     }
 }

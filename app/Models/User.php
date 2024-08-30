@@ -22,7 +22,10 @@ class User extends Authenticatable
         'password',
         'image',
     ];
-
+    function posts()
+    {
+        return $this->hasMany(Post::class, 'creator_id');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

@@ -6,8 +6,11 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
 use App\Models\Creator;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
+
 
 class PostController extends Controller
 {
@@ -37,6 +40,10 @@ class PostController extends Controller
      */
     public function create()
     {
+        $user = Auth::user();
+        if ($user->posts()->count() >= 3) {
+            return redirect()->route('posts.index')->with('error', 'You can only create up to 3 posts.');
+        }
         $creators = Creator::all();
         return view('posts.create', compact('creators'));
     }
@@ -46,6 +53,10 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
+        $user = Auth::user();
+        if ($user->posts()->count() >= 3) {
+            return redirect()->route('posts.index')->with('error', 'You can only create up to 3 posts.');
+        }
         $image_path = null;
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -53,6 +64,7 @@ class PostController extends Controller
         }
         $request_data = request()->all();
         $request_data['image'] = $image_path;
+        $request_data['creator_id'] = Auth::id();
         $post = Post::create($request_data);
         return to_route('posts.show', $post);
     }
@@ -71,6 +83,10 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        if ($post->creator_id != Auth::id()) {
+            return to_route('posts.index')->with('error', 'Unauthorized action, you can only edit the posts you own');
+        }
+
         $creators = Creator::all();
         return view("posts.edit", compact('post', 'creators'));
     }
@@ -96,6 +112,9 @@ class PostController extends Controller
     // }
     public function update(UpdatePostRequest $request, Post $post)
     {
+        if ($post->creator_id != Auth::id()) {
+            return to_route('posts.index')->with('error', 'Unauthorized action, you can only edit the posts you own');
+        }
         $imagePath = $post->image;
 
         if ($request->hasFile('image')) {
@@ -118,6 +137,18 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
+        // if ($post->creator_id != Auth::id()) {
+        //     return to_route('posts.index')->with('error', 'Unauthorized action, you can only delete the posts you own');
+        // }
+        // if (!Gate::allows('delete-post', $post)) {
+        //     // abort(403);
+        //     return to_route('posts.index')->with('error', 'Unauthorized action, you can only delete the posts you own');
+        // }
+        if (!Auth::user()->can('delete-post', $post)) {
+            // abort(403);
+            return to_route('posts.index')->with('error', 'Unauthorized action, you can only delete the posts you own');
+        }
+
         if ($post->image) {
             Storage::disk('posts_images')->delete($post->image);
         }
