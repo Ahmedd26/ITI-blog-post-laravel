@@ -5,7 +5,7 @@
 @section('content')
 
 @if(session('success'))
-    <div class="flex justify-center">
+    <div class="absolute top-[105px] left-1/2 -translate-x-1/2  flex justify-center">
         <div id="toast-success"
             class="transition-opacity duration-300 ease-in-out flex items-center w-full max-w-xs p-4 mb-4 text-zinc-500 bg-white rounded-lg shadow dark:text-zinc-400 dark:bg-zinc-900"
             role="alert">
@@ -32,7 +32,7 @@
     </div>
 @endif
 @if(session('error'))
-    <div class="flex justify-center">
+    <div class="absolute top-[105px] left-1/2 -translate-x-1/2 flex justify-center">
 
         <div id="toast-danger"
             class=" transition-opacity duration-300 ease-in-out flex items-center w-full max-w-xs p-4 mb-4 text-zinc-500 bg-white rounded-lg shadow dark:text-zinc-400 dark:bg-zinc-900"

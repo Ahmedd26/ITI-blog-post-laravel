@@ -48,10 +48,17 @@
                     @else
                         <li>
                             <!-- src="http://127.0.0.1:8000/images/posts/images/nUwjyoeeXYmEi6i76wlMwQXUj1IhbmVxgsT1BNAd.png" -->
-                            <img id="avatarButton" type="button" data-dropdown-toggle="userDropdown"
-                                data-dropdown-placement="bottom" class="size-16 rounded-full cursor-pointer"
-                                src="{{asset('images/users/' . (Auth::user()->image ? Auth::user()->image : 'images/default.png'))}}"
-                                alt="User dropdown">
+                            @if (Str::startsWith(Auth::user()->image, 'http'))
+                                <img id="avatarButton" type="button" data-dropdown-toggle="userDropdown"
+                                    data-dropdown-placement="bottom" class="size-16 rounded-full cursor-pointer"
+                                    src="{{Auth::user()->image}}" alt="User dropdown">
+                            @else
+                                <img id="avatarButton" type="button" data-dropdown-toggle="userDropdown"
+                                    data-dropdown-placement="bottom" class="size-16 rounded-full cursor-pointer"
+                                    src="{{asset('images/users/' . (Auth::user()->image ? Auth::user()->image : 'images/default.png'))}}"
+                                    alt="User dropdown">
+                            @endif
+
                             <div id="userDropdown"
                                 class="z-10 hidden bg-white divide-y divide-zinc-100 rounded-lg shadow w-44 dark:bg-zinc-700 dark:divide-zinc-600">
                                 <div class="px-4 py-3 text-sm text-zinc-900 dark:text-white">
